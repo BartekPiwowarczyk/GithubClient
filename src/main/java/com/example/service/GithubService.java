@@ -17,18 +17,17 @@ public class GithubService {
     @RestClient
     GithubClient githubClient;
 
-    public List<RepoDto> getRepositoriesForUser(String name) {
-        List<GithubRepoDto> githubRepoDtos = githubClient.getGithubRepositories("application/json", name);
+    public List<RepoDto> getRepositoriesForUser(String accept, String name) {
+        List<GithubRepoDto> githubRepoDtos = githubClient.getGithubRepositories(accept, name);
         return githubRepoDtos.stream()
                 .map(githubRepoDto -> new RepoDto(
                         githubRepoDto.name(),
                         githubRepoDto.owner().login(),
-                        githubClient.getGithubBranchesForRepository("application/json",name, githubRepoDto.name()).stream()
+                        githubClient.getGithubBranchesForRepository(accept,name, githubRepoDto.name()).stream()
                                 .map(githubBranchDto -> new BranchDto(
                                         githubBranchDto.name(),
                                         githubBranchDto.commit().sha()
-                                )).collect(Collectors.toList())
-                        )
+                                )).collect(Collectors.toList()))
                         )
                 .collect(Collectors.toList());
     }

@@ -1,20 +1,20 @@
 package com.example.controller;
 
-import com.example.model.dto.RepoDto;
-import com.example.webClient.dto.GithubRepoDto;
+import com.example.common.exception.ErrorMessage;
+import com.example.common.exception.GithubException;
 import com.example.service.GithubService;
-import com.example.webClient.GithubClient;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
+import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.ClientWebApplicationException;
 
 import java.io.Serializable;
-import java.util.List;
 
 @RequestScoped
-@Produces(MediaType.APPLICATION_JSON)
 @Path("/api")
 public class GithubController implements Serializable {
 
@@ -23,8 +23,15 @@ public class GithubController implements Serializable {
 
     @GET
     @Path("/users/{name}")
-    public List<RepoDto> getRepositoriesForUser(@PathParam("name") String name) {
-        return githubService.getRepositoriesForUser(name);
+    public Response getRepositoriesForUser(@HeaderParam("Accept") String accept, @PathParam("name") String name) {
+        try {
+            if(accept.equalsIgnoreCase("application/xml")) {
+                return Response.status(406).header(HttpHeaders.CONTENT_TYPE,"application/json").entity(new ErrorMessage("Wrong header",406L)).build();
+            }
+            return Response.status(200).entity(githubService.getRepositoriesForUser(accept, name)).build();
+        } catch (Exception e) {
+            throw new GithubException();
+        }
     }
 
 

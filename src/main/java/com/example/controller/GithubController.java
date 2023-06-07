@@ -33,7 +33,4 @@ public class GithubController implements Serializable {
             throw new GithubException();
         }
     }
-
-
-
 }

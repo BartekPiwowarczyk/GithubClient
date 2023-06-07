@@ -2,10 +2,13 @@ package com.example.service;
 
 import com.example.model.dto.BranchDto;
 import com.example.model.dto.RepoDto;
+import com.example.model.mapper.BranchDtoMapper;
+import com.example.model.mapper.RepoDtoMapper;
 import com.example.webClient.dto.GithubBranchDto;
 import com.example.webClient.dto.GithubRepoDto;
 import com.example.webClient.GithubClient;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
@@ -17,22 +20,16 @@ public class GithubService {
     @RestClient
     GithubClient githubClient;
 
+    @Inject
+    RepoDtoMapper repoDtoMapper;
+
+    @Inject
+    BranchDtoMapper branchDtoMapper;
+
     public List<RepoDto> getRepositoriesForUser(String accept, String name) {
         List<GithubRepoDto> githubRepoDtos = githubClient.getGithubRepositories(accept, name);
         return githubRepoDtos.stream()
-                .map(githubRepoDto -> new RepoDto(
-                        githubRepoDto.name(),
-                        githubRepoDto.owner().login(),
-                        githubClient.getGithubBranchesForRepository(accept,name, githubRepoDto.name()).stream()
-                                .map(githubBranchDto -> new BranchDto(
-                                        githubBranchDto.name(),
-                                        githubBranchDto.commit().sha()
-                                )).collect(Collectors.toList()))
-                        )
+                .map(githubRepoDto -> repoDtoMapper.mapToRepoDto(githubRepoDto,githubClient.getGithubBranchesForRepository(accept,name, githubRepoDto.name())))
                 .collect(Collectors.toList());
-    }
-
-    private List<BranchDto> getBranchesForRepository(String name, String repositoryName) {
-        return null;
     }
 }

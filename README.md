@@ -1,12 +1,32 @@
-# github-client
+# Github Client
+
+Simple project Github Api. 
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-## Running the application in dev mode
+## Table of contents
 
-You can run your application in dev mode that enables live coding using:
+* [General info] (#general-info)
+* [Technologies] (#technologies)
+* [Setup] (#setup)
+
+## General info
+
+Simple project created to show connect to Github Api. This project have only one main endpoint to get github user repositories.
+If something goes wrong a simple exception handler was created. 
+
+## Technologies
+
+Project is created with:
+* Quarkus 3.1.0.Final
+* Design pattern - Builder
+* Github Api - version 2022-11-28
+
+## Setup
+
+  You can run your application in dev mode that enables live coding using:
 ```shell script
 ./mvnw compile quarkus:dev
 ```
@@ -47,20 +67,10 @@ You can then execute your native executable with: `./target/github-client-1.0-SN
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
-## Related Guides
+# Endpoints
 
-- RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
+Project has 1 endpoint with Http method GET:
 
-## Provided Code
-
-### RESTEasy Reactive
-
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
-
-### RESTEasy Reactive Qute
-
-Create your web page using Quarkus RESTEasy Reactive & Qute
-
-[Related guide section...](https://quarkus.io/guides/qute#type-safe-templates)
+```shell script
+./mvnw package -Pnative -Dquarkus.native.container-build=true
+```

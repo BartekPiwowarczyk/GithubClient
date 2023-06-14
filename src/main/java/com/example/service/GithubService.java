@@ -23,8 +23,6 @@ public class GithubService {
     @Inject
     RepoDtoMapper repoDtoMapper;
 
-    @Inject
-    BranchDtoMapper branchDtoMapper;
 
     public List<RepoDto> getRepositoriesForUser(String accept, String name) {
         List<GithubRepoDto> githubRepoDtos = githubClient.getGithubRepositories(accept, name);

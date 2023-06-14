@@ -1,14 +1,10 @@
 package com.example.controller;
 
-import com.example.common.exception.ErrorMessage;
 import com.example.common.exception.GithubException;
 import com.example.service.GithubService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.ClientWebApplicationException;
 
@@ -23,14 +19,15 @@ public class GithubController implements Serializable {
 
     @GET
     @Path("/users/{name}")
-    public Response getRepositoriesForUser(@HeaderParam("Accept") String accept, @PathParam("name") String name) {
+    public Response getRepositoriesForUser(@HeaderParam("Accept") String accept, @PathParam("name") String name) throws GithubException {
         try {
-            if(accept.equalsIgnoreCase("application/xml")) {
-                return Response.status(406).header(HttpHeaders.CONTENT_TYPE,"application/json").entity(new ErrorMessage("Wrong header",406L)).build();
+            if (accept.equalsIgnoreCase("application/xml")) {
+                throw new GithubException("wrongHeader");
             }
             return Response.status(200).entity(githubService.getRepositoriesForUser(accept, name)).build();
-        } catch (Exception e) {
-            throw new GithubException();
+        } catch (ClientWebApplicationException e) {
+            throw new GithubException("userNotFound");
         }
     }
+
 }

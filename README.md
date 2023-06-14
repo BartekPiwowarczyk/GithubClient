@@ -8,10 +8,10 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 ## Table of contents
 
-* [General info] (#general-info)
-* [Technologies] (#technologies)
-* [Setup] (#setup)
-* [Endpoint Demo] (#endpoint-demo)
+- [General info] (#general-info)
+- [Technologies] (#technologies)
+- [Setup] (#setup)
+- [Endpoint Demo] (#endpoint-demo)
 
 ## General info
 
@@ -58,29 +58,29 @@ Project has 1 endpoint with Http method GET: http://your-domain/api/users/{name}
 We have to send request with the parameter: "name"  and header: "Accept", which specifies the desired response content type.
 
 We get the following response (JSON) :
-* [List of user repositories on success] (#list-of-user-repositories-on-success)
-* [Error message with status when user non exist] (#error-message-with-status-when-user-non-exist)
-* [Error message with status when we send header "application/xml"] (#error-message-with-status-when-we-send-header-application/xml)
+- [List of user repositories on success] (#list-of-user-repositories-on-success)
+- [Error message with status when user non exist] (#error-message-with-status-when-user-non-exist)
+- [Error message with status when we send header "application/xml"] (#error-message-with-status-when-we-send-header-application/xml)
 
 ### List of user repositories on success
 
 URL: http://localhost:8080/api/users/BartekPiwowarczyk
 Header: "application/json"
 
-![Image list of repositories] (./images-readme/Screenshot-user-found.jpg)
+![Image list of repositories](/images-readme/Screenshot-user-found.jpg)
 
 ### Error message with status when user non exist
 
 URL: http://localhost:8080/api/users/nonexistUser
 Header: "application/json"
 
-![Image exception user not found] (./images-readme/Screenshot-user-not-found.jpg)
+![Image exception user not found](/images-readme/Screenshot-user-not-found.jpg)
 
 ### Error message with status when we send header "application/xml"
 
 URL: http://localhost:8080/api/users/BartekPiwowarczyk
 Header: "application/xml"
 
-![Image exception wrong header - content type] (./images-readme/Screenshot-wrong-header.jpg)
+![Image exception wrong header - content type](/images-readme/Screenshot-wrong-header.jpg)
 
 

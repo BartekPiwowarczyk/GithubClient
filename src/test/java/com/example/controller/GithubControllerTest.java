@@ -66,5 +66,6 @@ class GithubControllerTest {
                 .statusCode(404)
                 .body("message",equalTo("User not found"));
 
+
     }
 }
